@@ -1,6 +1,11 @@
 const button100 = document.querySelector('#btn');
 const lista100 = document.querySelector('#lista');
-let listaAbierta = false; // variable booleana para indicar si la lista está abierta o cerrada
+let listaAbierta = false; 
+// variable booleana para indicar si la lista está abierta o cerrada
+
+//variable donde se almacenan los datos del pokemon
+const datosPokemon = document.querySelector('#datos-pokemon');
+
 
 // EVENTO AL HACER CLICK AL BOTON DE MOSTRAR/OCULTAR LOS 100 PRIMEROS POKEMON
 button100.addEventListener('click', function () {
@@ -58,23 +63,9 @@ async function getPokemons() {
 function mostrarDatosPokemon(pokemonDatos) {
     // Mostrar los datos del Pokemon en algún lugar de la página
     const nombrePokemon = document.createElement('h2');
-    nombrePokemon.textContent = pokemonDatos.name;
+    nombrePokemon.textContent = pokemonDatos.types[0].type.name;
     datosPokemon.appendChild(nombrePokemon);
     
     // Aquí puedes agregar más elementos para mostrar otros datos del Pokemon, como su imagen, estadísticas, etc.
     //   En este ejemplo, he agregado un nuevo elemento div con el ID datos-pokemon en el HTML para mostrar los datos del Pokemon. Cuando se hace clic en un botón de Pokemon, se llama a la función mostrarDatosPokemon, que crea un nuevo h2 con el nombre del Pokemon y lo agrega al div de datos-pokemon. Puedes agregar más elementos y datos según sea necesario para mostrar la información del Pokemon que desees.
   }
-  
-// const URLbase = 'https://pokeapi.co/api/v2/pokemon';
-// const limiteApi = 20;
-// const pokemonList = [];
-
-// async function getPokemonList() {
-//   for (let i = 0; i < 100; i += limiteApi) {
-//     const response = await fetch(`${URLbase}?offset=${i}&limit=${limiteApi}`);
-//     const data = await response.json();
-//     pokemonList.push(...data.results);
-//   }
-//   console.log(pokemonList); // lista completa de los primeros 100 Pokémon
-// }
-// getPokemonList().catch(error => console.log(error));
