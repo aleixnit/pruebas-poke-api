@@ -1,14 +1,16 @@
-const button100 = document.querySelector('#btn');
-const lista100 = document.querySelector('#lista');
-let listaAbierta = false; 
+const button100 = document.querySelector("#btn");
+const lista100 = document.querySelector("#lista");
+let listaAbierta = false;
 // variable booleana para indicar si la lista está abierta o cerrada
 
 //variable donde se almacenan los datos del pokemon
-const datosPokemon = document.querySelector('#datos-pokemon');
+const datosPokemon = document.querySelector("#datos-pokemon");
 
+let tipoCreado = false;
+let tipoPokemon;
 
 // EVENTO AL HACER CLICK AL BOTON DE MOSTRAR/OCULTAR LOS 100 PRIMEROS POKEMON
-button100.addEventListener('click', function () {
+button100.addEventListener("click", function () {
   if (listaAbierta) {
     // Si la lista está abierta, eliminar todos los elementos de la lista
     while (lista100.firstChild) {
@@ -29,43 +31,36 @@ async function getPokemons() {
   );
   const datos = await respuesta.json();
   console.log(datos);
-  datos.results.forEach(pokemon => {
-
+  datos.results.forEach((pokemon) => {
     // Crear un elemento de lista para cada nombre de Pokémon
-    const itemLista = document.createElement('button');
+    const itemLista = document.createElement("button");
     itemLista.textContent = pokemon.name.toUpperCase();
-    itemLista.classList.add('class'); 
+    itemLista.classList.add("class");
 
     //funcion para ejecutar que se muestren los datos de bulbasaur al hacer click
-    itemLista.addEventListener('click', async function() {
-        const pokemonRespuesta = await fetch('https://pokeapi.co/api/v2/pokemon/1/');
-        const pokemonDatos = await pokemonRespuesta.json();
-        mostrarDatosPokemon(pokemonDatos);
+    itemLista.addEventListener("click", async function () {
+      const pokemonRespuesta = await fetch(
+        "https://pokeapi.co/api/v2/pokemon/1/"
+      );
+      const pokemonDatos = await pokemonRespuesta.json();
+      // mostrarDatosPokemon(pokemonDatos);
+      const botones = document.querySelectorAll('.class');
+      botones.forEach((boton) => {
+        boton.style.display = 'none';
       });
 
-    //FUNCION PARA MANIPULAR LO QUE HACE AL CLICAR CADA POKEMON
-    // itemLista.addEventListener('click', function() {
-    //     console.log(`Se ha seleccionado el Pokemon ${pokemon.name}`);
-    //     while (lista100.firstChild) {
-    //         lista100.removeChild(lista100.firstChild);
-    //       }
-    //       const nuevoParrafo = document.createElement('p');
-    //   nuevoParrafo.textContent = `Has seleccionado a ${pokemon.name.toUpperCase()}`;
-    //   lista100.appendChild(nuevoParrafo);
-    //   });
+      if (!tipoCreado) {
+        // Si el elemento de tipo no existe, crear uno nuevo
+        tipoPokemon = document.createElement("p");
+        datosPokemon.appendChild(tipoPokemon);
+        tipoCreado = true;
+      }
+
+      // Actualizar el contenido del elemento de tipo
+      tipoPokemon.textContent = `Tipo: ${pokemonDatos.types[0].type.name}`;
+    });
 
     // Agregar el elemento de lista a la lista existente
     lista100.appendChild(itemLista);
   });
-  
 }
-
-function mostrarDatosPokemon(pokemonDatos) {
-    // Mostrar los datos del Pokemon en algún lugar de la página
-    const nombrePokemon = document.createElement('h2');
-    nombrePokemon.textContent = pokemonDatos.types[0].type.name;
-    datosPokemon.appendChild(nombrePokemon);
-    
-    // Aquí puedes agregar más elementos para mostrar otros datos del Pokemon, como su imagen, estadísticas, etc.
-    //   En este ejemplo, he agregado un nuevo elemento div con el ID datos-pokemon en el HTML para mostrar los datos del Pokemon. Cuando se hace clic en un botón de Pokemon, se llama a la función mostrarDatosPokemon, que crea un nuevo h2 con el nombre del Pokemon y lo agrega al div de datos-pokemon. Puedes agregar más elementos y datos según sea necesario para mostrar la información del Pokemon que desees.
-  }
