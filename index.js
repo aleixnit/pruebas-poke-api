@@ -16,7 +16,13 @@ button100.addEventListener("click", function () {
     while (lista100.firstChild) {
       lista100.removeChild(lista100.firstChild);
     }
-    listaAbierta = false; // actualizar la variable booleana
+    // actualizar la variable booleana
+    listaAbierta = false;
+    // Eliminar el elemento de tipo del Pokemon si existe
+    if (tipoPokemon !== null) {
+      datosPokemon.removeChild(tipoPokemon);
+      tipoPokemon = null;
+    } 
   } else {
     // Si la lista está cerrada, mostrar los nombres de los primeros 100 Pokémon
     getPokemons();
@@ -44,9 +50,9 @@ async function getPokemons() {
       );
       const pokemonDatos = await pokemonRespuesta.json();
       // mostrarDatosPokemon(pokemonDatos);
-      const botones = document.querySelectorAll('.class');
+      const botones = document.querySelectorAll(".class");
       botones.forEach((boton) => {
-        boton.style.display = 'none';
+        boton.style.display = "none";
       });
 
       if (!tipoCreado) {
