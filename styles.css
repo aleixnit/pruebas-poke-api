@@ -1,0 +1,19 @@
+p {
+    color: red;
+}
+
+.lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+    gap: 50px;
+    padding: 35px;
+}
+
+.class {
+    background-color: black;
+    padding: 30px;
+    color: white;
+}
